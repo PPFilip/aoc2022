@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
 use std::cmp::max;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
@@ -8,6 +9,12 @@ use std::io::BufRead;
 pub fn day02part1() {
     let file = File::open("input/day02.txt").unwrap();
     let mut points = 0;
+
+    let point_values = HashMap::from([
+        ("X", 1),
+        ("Y", 2),
+        ("Z", 3)
+    ]);
 
     for l in io::BufReader::new(file).lines() {
         let line = l.unwrap();
@@ -18,11 +25,7 @@ pub fn day02part1() {
         let we_win =  v == ["A", "Y"] || v == ["B", "Z"] || v == ["C", "X"];
         let we_draw =  v == ["A", "X"] || v == ["B", "Y"] || v == ["C", "Z"];
 
-        points += match our_hand {
-            "X" => 1,
-            "Y" => 2,
-            _ => 3
-        };
+        points += point_values[our_hand];
 
         if we_win {
             points += 6
@@ -39,50 +42,36 @@ pub fn day02part2() {
     let file = File::open("input/day02.txt").unwrap();
     let mut points = 0;
 
+    let point_values = HashMap::from([
+        ("X", 1),
+        ("Y", 2),
+        ("Z", 3)
+    ]);
+
+    let hand_map = HashMap::from([
+        (("A", "X"), "Z"),
+        (("A", "Y"), "X"),
+        (("A", "Z"), "Y"),
+        (("B", "X"), "X"),
+        (("B", "Y"), "Y"),
+        (("B", "Z"), "Z"),
+        (("C", "X"), "Y"),
+        (("C", "Y"), "Z"),
+        (("C", "Z"), "X"),
+    ]);
+
     for l in io::BufReader::new(file).lines() {
         let line = l.unwrap();
         let v: Vec<&str> = line.split(' ').collect();
         let our_choice = v.get(1).unwrap().to_owned();
         let opp_hand = v.get(0).unwrap().to_owned();
 
-        let our_hand = match opp_hand {
-            "A" => match our_choice {
-                "X" => "Z",
-                "Y" => "X",
-                "Z" => "Y",
-                _ => ""
-            },
-            "B" => match our_choice {
-                "X" => "X",
-                "Y" => "Y",
-                "Z" => "Z",
-                _ => ""
-            },
-            "C" => match our_choice {
-                "X" => "Y",
-                "Y" => "Z",
-                "Z" => "X",
-                _ => ""
-            },
-            _ => ""
-        };
+        let our_hand = hand_map[&(opp_hand, our_choice)];
 
+        let we_win = our_choice == "Z";
+        let we_draw = our_choice == "Y";
 
-        let we_win =
-            (opp_hand == "A"  && our_hand == "Y") ||
-                (opp_hand == "B" && our_hand == "Z") ||
-                (opp_hand == "C" && our_hand == "X");
-
-        let we_draw =
-            (opp_hand == "A"  && our_hand == "X") ||
-                (opp_hand == "B" && our_hand == "Y") ||
-                (opp_hand == "C" && our_hand == "Z");
-
-        points += match our_hand {
-            "X" => 1,
-            "Y" => 2,
-            _ => 3
-        };
+        points += point_values[our_hand];
 
         if we_win {
             points += 6
