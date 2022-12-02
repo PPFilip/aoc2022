@@ -1,6 +1,11 @@
+#![allow(unused_imports)]
 mod day01;
+mod day02;
+
 use crate::day01::*;
+use crate::day02::*;
+
 
 fn main() {
-    day01part2();
+    day02part2();
 }
