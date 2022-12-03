@@ -15,8 +15,7 @@ pub fn day03part1() {
         let line = l.unwrap();
         let (half1, half2) = line.split_at(line.len()/2);
 
-        let set: HashSet<char> = half1.chars().collect();
-        for c in set {
+        for c in half1.chars() {
             if half2.contains(c) {
                 common_chars.push(c);
                 break;
