@@ -6,8 +6,8 @@ use std::fs::File;
 use std::io;
 use std::io::BufRead;
 
-pub fn day02part1() {
-    let file = File::open("input/day02.txt").unwrap();
+pub fn part1(input_file: &str) -> u32 {
+    let file = File::open(input_file).unwrap();
     let mut points = 0;
 
     let point_values = HashMap::from([
@@ -35,11 +35,11 @@ pub fn day02part1() {
 
     }
 
-    println!("{}", points);
+    points
 }
 
-pub fn day02part2() {
-    let file = File::open("input/day02.txt").unwrap();
+pub fn part2(input_file: &str) -> u32 {
+    let file = File::open(input_file).unwrap();
     let mut points = 0;
 
     let point_values = HashMap::from([
@@ -81,5 +81,32 @@ pub fn day02part2() {
 
     }
 
-    println!("{}", points);
+    points
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use pretty_assertions;
+
+    #[test]
+    fn test_part1_example() {
+        assert_eq!(part1("input/day02_example.txt"), 15)
+    }
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1("input/day02.txt"), 11603)
+    }
+
+    #[test]
+    fn test_part2_example() {
+        assert_eq!(part2("input/day02_example.txt"), 12)
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2("input/day02.txt"), 12725)
+    }
+
 }

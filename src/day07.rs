@@ -6,7 +6,7 @@ use std::io;
 use std::io::BufRead;
 
 
-pub fn day07part1(input_file: &str) -> u32 {
+pub fn part1(input_file: &str) -> u32 {
     let file = File::open(input_file).unwrap();
     let mut act_path: Vec<String> = Vec::new();
 
@@ -57,11 +57,10 @@ pub fn day07part1(input_file: &str) -> u32 {
     }
 
     let total = dir_sizes.values().filter(|&&x| x<=100000).sum();
-    println!("{total}");
     total
 }
 
-pub fn day07part2(input_file: &str) -> u32 {
+pub fn part2(input_file: &str) -> u32 {
     let file = File::open(input_file).unwrap();
     let mut act_path: Vec<String> = Vec::new();
 
@@ -125,7 +124,6 @@ pub fn day07part2(input_file: &str) -> u32 {
         }
     }
 
-    println!("{total}");
     total
 }
 
@@ -137,22 +135,22 @@ mod tests {
 
     #[test]
     fn test_part1_example() {
-        assert_eq!(day07part1("input/day07_example.txt"), 95437)
+        assert_eq!(part1("input/day07_example.txt"), 95437)
     }
 
     #[test]
     fn test_part1() {
-        assert_eq!(day07part1("input/day07.txt"), 1449447)
+        assert_eq!(part1("input/day07.txt"), 1449447)
     }
 
     #[test]
     fn test_part2_example() {
-        assert_eq!(day07part2("input/day07_example.txt"), 24933642)
+        assert_eq!(part2("input/day07_example.txt"), 24933642)
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(day07part2("input/day07.txt"), 8679207)
+        assert_eq!(part2("input/day07.txt"), 8679207)
     }
 
 }

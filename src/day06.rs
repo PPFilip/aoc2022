@@ -3,8 +3,8 @@ use std::fs::File;
 use std::io;
 use std::io::BufRead;
 
-pub fn day06part1() {
-    let file = File::open("input/day06.txt").unwrap();
+pub fn part1(input_file: &str) -> Result<u32, ()> {
+    let file = File::open(input_file).unwrap();
 
     for l in io::BufReader::new(file).lines() {
         let line = l.unwrap();
@@ -22,18 +22,17 @@ pub fn day06part1() {
                 vv.sort();
                 vv.dedup();
                 if vv.len() == 4 {
-                    println!("{}", pos);
-                    break;
+                    return Ok(pos);
                 }
             }
         }
     }
 
-
+    return Err(());
 }
 
-pub fn day06part2() {
-        let file = File::open("input/day06.txt").unwrap();
+pub fn part2(input_file: &str) -> Result<u32, ()> {
+        let file = File::open(input_file).unwrap();
 
     for l in io::BufReader::new(file).lines() {
         let line = l.unwrap();
@@ -51,12 +50,38 @@ pub fn day06part2() {
                 vv.sort();
                 vv.dedup();
                 if vv.len() == 14 {
-                    println!("{}", pos);
-                    break;
+                    return Ok(pos);
                 }
             }
         }
     }
 
+    return Err(());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use pretty_assertions;
+
+    #[test]
+    fn test_part1_example() {
+        assert_eq!(part1("input/day06_example.txt"), Ok(7))
+    }
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1("input/day06.txt"), Ok(1651))
+    }
+
+    #[test]
+    fn test_part2_example() {
+        assert_eq!(part2("input/day06_example.txt"), Ok(19))
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2("input/day06.txt"), Ok(3837))
+    }
 
 }

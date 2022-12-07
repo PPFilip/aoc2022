@@ -2,10 +2,12 @@
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
+use std::ops::Add;
 
-pub fn day05part1() {
-    let file = File::open("input/day05_parsed.txt").unwrap();
+pub fn part1(input_file: &str) -> String {
+    let file = File::open(input_file).unwrap();
     const NUM_STACKS:usize = 9;
+    //TODO: remove fixed size
 
     const NEW_VEC: Vec<char> = Vec::new();
     let mut stacks= [NEW_VEC; NUM_STACKS];
@@ -24,12 +26,9 @@ pub fn day05part1() {
             let move_count:usize = v.get(1).unwrap().parse().unwrap();
             let from_stack:usize = v.get(3).unwrap().parse().unwrap();
             let to_stack:usize = v.get(5).unwrap().parse().unwrap();
-            println!("{move_count:?} {from_stack:?} {to_stack:?}");
 
             for _ in 0 .. move_count {
                 let cpop = stacks[from_stack-1].pop().unwrap();
-                println!("Moving {cpop} from {from_stack} to {to_stack}");
-
                 stacks[to_stack-1].push(cpop);
             }
 
@@ -37,21 +36,17 @@ pub fn day05part1() {
 
     }
 
-    println!("Stacks: {stacks:?}");
-
-    print!("Result: ");
+    let mut result = "".to_string();
     for mut s in stacks {
-        print!("{}", s.pop().unwrap());
+        let top_crate = s.pop().unwrap();
+        result.push(top_crate);
     }
-    println!();
 
-
-
+    result
 }
 
-pub fn day05part2() {
-
-    let file = File::open("input/day05_parsed.txt").unwrap();
+pub fn part2(input_file: &str) -> String {
+    let file = File::open(input_file).unwrap();
     const NUM_STACKS:usize = 9;
 
     const NEW_VEC: Vec<char> = Vec::new();
@@ -71,18 +66,15 @@ pub fn day05part2() {
             let move_count:usize = v.get(1).unwrap().parse().unwrap();
             let from_stack:usize = v.get(3).unwrap().parse().unwrap();
             let to_stack:usize = v.get(5).unwrap().parse().unwrap();
-            println!("{move_count:?} {from_stack:?} {to_stack:?}");
 
             let mut backpop: Vec<char> = Default::default();
             for _ in 0 .. move_count {
                 let cpop = stacks[from_stack-1].pop().unwrap();
-                println!("Storing {cpop} from {from_stack}");
                 backpop.push(cpop);
             }
 
             backpop.reverse();
             for c in backpop {
-                println!("Pushing {c} from {from_stack} to {to_stack}");
                 stacks[to_stack-1].push(c);
             }
 
@@ -90,13 +82,38 @@ pub fn day05part2() {
 
     }
 
-    println!("Stacks: {stacks:?}");
-
-    print!("Result: ");
+    let mut result = "".to_string();
     for mut s in stacks {
-        print!("{}", s.pop().unwrap());
+        let top_crate = s.pop().unwrap();
+        result.push(top_crate);
     }
-    println!();
 
+    result
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use pretty_assertions;
+
+    // #[test]
+    // fn test_part1_example() {
+    //     assert_eq!(part1("input/day05_example_parsed.txt"), "CMZ".to_string())
+    // }
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1("input/day05_parsed.txt"), "CWMTGHBDW".to_string())
+    }
+
+    // #[test]
+    // fn test_part2_example() {
+    //     assert_eq!(part2("input/day05_example_parsed.txt"), "MCD".to_string())
+    // }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2("input/day05_parsed.txt"), "SSCGWJCRB".to_string())
+    }
 
 }

@@ -3,8 +3,8 @@ use std::fs::File;
 use std::io;
 use std::io::BufRead;
 
-pub fn day04part1() {
-    let file = File::open("input/day04.txt").unwrap();
+pub fn part1(input_file: &str) -> u32 {
+    let file = File::open(input_file).unwrap();
     let mut points = 0_u32;
 
     for l in io::BufReader::new(file).lines() {
@@ -23,12 +23,11 @@ pub fn day04part1() {
 
     }
 
-
-    println!("{}", points);
+    points
 }
 
-pub fn day04part2() {
-    let file = File::open("input/day04.txt").unwrap();
+pub fn part2(input_file: &str) -> u32 {
+    let file = File::open(input_file).unwrap();
     let mut points = 0_u32;
 
     for l in io::BufReader::new(file).lines() {
@@ -47,6 +46,32 @@ pub fn day04part2() {
 
     }
 
+    points
+}
 
-    println!("{}", points);
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use pretty_assertions;
+
+    #[test]
+    fn test_part1_example() {
+        assert_eq!(part1("input/day04_example.txt"), 2)
+    }
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1("input/day04.txt"), 540)
+    }
+
+    #[test]
+    fn test_part2_example() {
+        assert_eq!(part2("input/day04_example.txt"), 4)
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2("input/day04.txt"), 872)
+    }
+
 }

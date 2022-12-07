@@ -5,25 +5,25 @@ use std::fs::File;
 use std::io;
 use std::io::BufRead;
 
-pub fn day01part1() {
-    let file = File::open("input/day01.txt").unwrap();
-    let mut elf_sum = 0_u64;
-    let mut elf_max = 0_u64;
+pub fn part1(input_file: &str) -> u32 {
+    let file = File::open(input_file).unwrap();
+    let mut elf_sum = 0_u32;
+    let mut elf_max = 0_u32;
     for l in io::BufReader::new(file).lines() {
         let line = l.unwrap();
         if line == "" {
             elf_max = max(elf_sum, elf_max);
             elf_sum = 0;
         } else {
-            elf_sum += line.parse::<u64>().unwrap();
+            elf_sum += line.parse::<u32>().unwrap();
         }
     }
-    println!("{}", elf_max);
+    elf_max
 }
 
-pub fn day01part2() {
-    let file = File::open("input/day01.txt").unwrap();
-    let mut elf_sum = 0_u64;
+pub fn part2(input_file: &str) -> u32 {
+    let file = File::open(input_file).unwrap();
+    let mut elf_sum = 0_u32;
     let mut elf_vec = Vec::new();
 
     for l in io::BufReader::new(file).lines() {
@@ -32,16 +32,44 @@ pub fn day01part2() {
             elf_vec.push(elf_sum);
             elf_sum = 0;
         } else {
-            elf_sum += line.parse::<u64>().unwrap();
+            elf_sum += line.parse::<u32>().unwrap();
         }
     }
 
     elf_vec.sort();
     elf_vec.reverse();
 
-    let mut elf_sum = 0_u64;
+    let mut elf_sum = 0_u32;
     for v in &elf_vec[0..3] {
         elf_sum += v;
     }
-    println!("{}", elf_sum);
+    elf_sum
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use pretty_assertions;
+
+    #[test]
+    fn test_part1_example() {
+        assert_eq!(part1("input/day01_example.txt"), 24000)
+    }
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1("input/day01.txt"), 67658)
+    }
+
+    #[test]
+    fn test_part2_example() {
+        assert_eq!(part2("input/day01_example.txt"), 45000)
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2("input/day01.txt"), 200158)
+    }
+
 }

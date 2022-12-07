@@ -6,8 +6,8 @@ use std::fs::File;
 use std::io;
 use std::io::BufRead;
 
-pub fn day03part1() {
-    let file = File::open("input/day03.txt").unwrap();
+pub fn part1(input_file: &str) -> u32 {
+    let file = File::open(input_file).unwrap();
     let mut points = 0_u32;
     let mut common_chars = Vec::new();
 
@@ -33,11 +33,11 @@ pub fn day03part1() {
         points += val;
     }
 
-    println!("{}", points);
+    points
 }
 
-pub fn day03part2() {
-    let file = File::open("input/day03.txt").unwrap();
+pub fn part2(input_file: &str) -> u32 {
+    let file = File::open(input_file).unwrap();
     let mut points = 0_u32;
     let mut common_chars = Vec::new();
 
@@ -73,5 +73,32 @@ pub fn day03part2() {
         points += val;
     }
 
-    println!("{}", points);
+    points
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use pretty_assertions;
+
+    #[test]
+    fn test_part1_example() {
+        assert_eq!(part1("input/day03_example.txt"), 157)
+    }
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1("input/day03.txt"), 7597)
+    }
+
+    #[test]
+    fn test_part2_example() {
+        assert_eq!(part2("input/day03_example.txt"), 70)
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2("input/day03.txt"), 2607)
+    }
+
 }
