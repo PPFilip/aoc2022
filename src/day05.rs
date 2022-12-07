@@ -94,7 +94,7 @@ pub fn part2(input_file: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use pretty_assertions;
+    use pretty_assertions::assert_eq;
 
     // #[test]
     // fn test_part1_example() {
