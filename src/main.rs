@@ -6,8 +6,9 @@ mod day04;
 mod day05;
 mod day06;
 mod day07;
+mod day08;
 
 fn main() {
-    let p = day07::part2("input/day07.txt");
+    let p = day08::part2("input/day08.txt");
     print!("Result - {p:?}")
 }
