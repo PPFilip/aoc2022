@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
@@ -57,6 +56,13 @@ pub fn part2(input_file: &str) -> Result<u32, ()> {
     }
 
     return Err(());
+}
+
+fn main() {
+    let p1 = part1("input/day06.txt");
+    println!("Result 1 - {p1:?}");
+    let p2 = part2("input/day06.txt");
+    println!("Result 2 - {p2:?}");
 }
 
 #[cfg(test)]

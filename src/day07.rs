@@ -1,6 +1,4 @@
-#![allow(dead_code)]
-
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
@@ -127,6 +125,12 @@ pub fn part2(input_file: &str) -> u32 {
     total
 }
 
+fn main() {
+    let p1 = part1("input/day07.txt");
+    println!("Result 1 - {p1:?}");
+    let p2 = part2("input/day07.txt");
+    println!("Result 2 - {p2:?}");
+}
 
 #[cfg(test)]
 mod tests {

@@ -1,6 +1,3 @@
-#![allow(dead_code)]
-
-use std::cmp::max;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io;
@@ -82,6 +79,13 @@ pub fn part2(input_file: &str) -> u32 {
     }
 
     points
+}
+
+fn main() {
+    let p1 = part1("input/day02.txt");
+    println!("Result 1 - {p1:?}");
+    let p2 = part2("input/day02.txt");
+    println!("Result 2 - {p2:?}");
 }
 
 #[cfg(test)]

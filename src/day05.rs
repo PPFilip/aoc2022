@@ -1,8 +1,6 @@
-#![allow(dead_code)]
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
-use std::ops::Add;
 
 pub fn part1(input_file: &str) -> String {
     let file = File::open(input_file).unwrap();
@@ -48,6 +46,7 @@ pub fn part1(input_file: &str) -> String {
 pub fn part2(input_file: &str) -> String {
     let file = File::open(input_file).unwrap();
     const NUM_STACKS:usize = 9;
+    //TODO: remove fixed size
 
     const NEW_VEC: Vec<char> = Vec::new();
     let mut stacks= [NEW_VEC; NUM_STACKS];
@@ -89,6 +88,13 @@ pub fn part2(input_file: &str) -> String {
     }
 
     result
+}
+
+fn main() {
+    let p1 = part1("input/day05_parsed.txt");
+    println!("Result 1 - {p1:?}");
+    let p2 = part2("input/day05_parsed.txt");
+    println!("Result 2 - {p2:?}");
 }
 
 #[cfg(test)]

@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
@@ -194,6 +192,13 @@ pub fn part2(input_file: &str) -> u32 {
     }
 
     max_scenic_score
+}
+
+fn main() {
+    let p1 = part1("input/day08.txt");
+    println!("Result 1 - {p1:?}");
+    let p2 = part2("input/day08.txt");
+    println!("Result 2 - {p2:?}");
 }
 
 

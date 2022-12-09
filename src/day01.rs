@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use std::cmp::max;
 use std::fs::File;
 use std::io;
@@ -46,6 +44,12 @@ pub fn part2(input_file: &str) -> u32 {
     elf_sum
 }
 
+fn main() {
+    let p1 = part1("input/day01.txt");
+    println!("Result 1 - {p1:?}");
+    let p2 = part2("input/day01.txt");
+    println!("Result 2 - {p2:?}");
+}
 
 #[cfg(test)]
 mod tests {
