@@ -1,6 +1,6 @@
 [package]
 name = "aoc2022"
-version = "0.1.12"
+version = "0.1.13"
 edition = "2021"
 description = "Advent of Code 2022"
 repository = "https://github.com/PPFilip/aoc2022"
@@ -60,7 +60,13 @@ path = "src/day12.rs"
 name = "day12-nicer"
 path = "src/day12-nicer.rs"
 
+[[bin]]
+name = "day13"
+path = "src/day13.rs"
+
 [dependencies]
 pretty_assertions = "1.3.0"
 itertools = "0.10.5"
 pathfinding = "4.0.0"
+serde_json = "1.0.89"
+serde = { version = "1.0.150", features = ["derive", "rc"] }
