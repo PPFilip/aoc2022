@@ -1,6 +1,6 @@
 [package]
 name = "aoc2022"
-version = "0.1.13"
+version = "0.1.14"
 edition = "2021"
 description = "Advent of Code 2022"
 repository = "https://github.com/PPFilip/aoc2022"
@@ -63,6 +63,10 @@ path = "src/day12-nicer.rs"
 [[bin]]
 name = "day13"
 path = "src/day13.rs"
+
+[[bin]]
+name = "day14"
+path = "src/day14.rs"
 
 [dependencies]
 pretty_assertions = "1.3.0"
