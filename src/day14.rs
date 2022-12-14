@@ -8,10 +8,10 @@ const MAX_LINES: usize = 171;
 
 fn parse_input(input_file: &str, bottom_at: usize) -> [[char;MAX_ROWS];MAX_LINES] {
     let file = File::open(input_file).unwrap();
-        let mut max_x: usize = usize::MIN;
-        let mut max_y: usize = usize::MIN;
-        let mut min_x: usize = usize::MAX;
-        let mut min_y: usize = usize::MAX;
+    let mut max_x: usize = usize::MIN;
+    let mut max_y: usize = usize::MIN;
+    let mut min_x: usize = usize::MAX;
+    let mut min_y: usize = usize::MAX;
 
     let mut cave = [['.';MAX_ROWS];MAX_LINES];
 
@@ -39,28 +39,26 @@ fn parse_input(input_file: &str, bottom_at: usize) -> [[char;MAX_ROWS];MAX_LINES
             }
 
             if prev_x == x {
-                let mut from_y = min(prev_y, y);
-                let mut to_y = max(prev_y, y) + 1;
+                let from_y = min(prev_y, y);
+                let to_y = max(prev_y, y) + 1;
                 for yy in from_y .. to_y {
                     cave[yy][x] = '#';
                 }
 
-                prev_x = x;
-                prev_y = y;
-                continue;
             } else if prev_y == y {
-                let mut from_x = min(prev_x, x);
-                let mut to_x = max(prev_x, x) + 1;
+                let from_x = min(prev_x, x);
+                let to_x = max(prev_x, x) + 1;
                 for xx in from_x .. to_x {
                     cave[y][xx] = '#';
                 }
 
-                prev_x = x;
-                prev_y = y;
-                continue;
             } else {
                 panic!("wtf");
             }
+
+            prev_x = x;
+            prev_y = y;
+
         }
 
     }
