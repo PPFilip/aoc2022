@@ -1,6 +1,6 @@
 use std::cmp::{max, min};
 use std::fs::File;
-use std::{io, isize};
+use std::{io};
 use std::io::{BufRead};
 
 const MAX_ROWS: usize = 1034;
@@ -8,10 +8,10 @@ const MAX_LINES: usize = 171;
 
 fn parse_input(input_file: &str, bottom_at: usize) -> [[char;MAX_ROWS];MAX_LINES] {
     let file = File::open(input_file).unwrap();
-        let mut max_x: isize = isize::MIN;
-        let mut max_y: isize = isize::MIN;
-        let mut min_x: isize = isize::MAX;
-        let mut min_y: isize = isize::MAX;
+        let mut max_x: usize = usize::MIN;
+        let mut max_y: usize = usize::MIN;
+        let mut min_x: usize = usize::MAX;
+        let mut min_y: usize = usize::MAX;
 
     let mut cave = [['.';MAX_ROWS];MAX_LINES];
 
@@ -19,19 +19,18 @@ fn parse_input(input_file: &str, bottom_at: usize) -> [[char;MAX_ROWS];MAX_LINES
         let line = l.unwrap();
         let points: Vec<&str> = line.split(" -> ").collect();
 
-        let mut prev_x = isize::MAX;
-        let mut prev_y = isize::MAX;
+        let mut prev_x = usize::MAX;
+        let mut prev_y = usize::MAX;
 
         for (pi, p) in points.iter().enumerate() {
-            let pc: Vec<&str> = p.split(',').collect();
-            let x: isize = pc[0].parse().unwrap();
-            let y: isize = pc[1].parse().unwrap();
+            let (x, y) = p.split_once(',').unwrap();
+            let x: usize = x.parse().unwrap();
+            let y: usize = y.parse().unwrap();
 
             max_x = max(x, max_x);
             max_y = max(y, max_y);
             min_x = min(x, min_x);
             min_y = min(y, min_y);
-
 
             if pi == 0 {
                 prev_x = x;
@@ -40,32 +39,27 @@ fn parse_input(input_file: &str, bottom_at: usize) -> [[char;MAX_ROWS];MAX_LINES
             }
 
             if prev_x == x {
-                let step = (y-prev_y)/(y-prev_y).abs();
-                let mut pos_y = prev_y;
-                while pos_y != y {
-                    cave[pos_y as usize][x as usize] = '#';
-                    pos_y += step;
+                let mut from_y = min(prev_y, y);
+                let mut to_y = max(prev_y, y) + 1;
+                for yy in from_y .. to_y {
+                    cave[yy][x] = '#';
                 }
-                                    cave[pos_y as usize][x as usize] = '#';
 
                 prev_x = x;
                 prev_y = y;
-                continue
-            }
-
-            if prev_y == y {
-                let step = (x-prev_x)/(x-prev_x).abs();
-
-                let mut pos_x = prev_x;
-                while pos_x != x {
-                    cave[y as usize][pos_x as usize] = '#';
-                    pos_x += step;
+                continue;
+            } else if prev_y == y {
+                let mut from_x = min(prev_x, x);
+                let mut to_x = max(prev_x, x) + 1;
+                for xx in from_x .. to_x {
+                    cave[y][xx] = '#';
                 }
-                                    cave[y as usize][pos_x as usize] = '#';
 
                 prev_x = x;
                 prev_y = y;
-                continue
+                continue;
+            } else {
+                panic!("wtf");
             }
         }
 
@@ -98,24 +92,20 @@ pub fn part1(input_file: &str) -> usize {
         sand += 1;
 
         loop {
-            if cave[y+1][x] == 'A' {
-                break 'outer;
-            } else if cave[y+1][x] == '.' {
-                y += 1;
-                continue;
-            } else {
-
-                if cave[y+1][x-1] == '.' {
-                    x -= 1;
-                    y += 1;
-                    continue;
-                } else if cave[y+1][x+1] == '.' {
-                    x += 1;
-                    y += 1;
-                    continue;
-                } else {
-                    cave[y][x] = 'O';
-                    continue 'outer;
+            match cave[y+1][x] {
+                'A' => break 'outer,
+                '.' => y += 1,
+                _ => {
+                    if cave[y+1][x-1] == '.' {
+                        x -= 1;
+                        y += 1;
+                    } else if cave[y+1][x+1] == '.' {
+                        x += 1;
+                        y += 1;
+                    } else {
+                        cave[y][x] = 'O';
+                        continue 'outer;
+                    }
                 }
             }
         }
@@ -127,7 +117,7 @@ pub fn part1(input_file: &str) -> usize {
 
 
 pub fn part2(input_file: &str) -> usize {
-   let mut cave = parse_input(input_file, 2);
+    let mut cave = parse_input(input_file, 2);
     let mut sand = 0;
 
     'outer: loop {
@@ -139,22 +129,19 @@ pub fn part2(input_file: &str) -> usize {
         }
 
         loop {
-            if cave[y+1][x] == '.' {
-                y += 1;
-                continue;
-            } else {
-
-                if cave[y+1][x-1] == '.' {
-                    x -= 1;
-                    y += 1;
-                    continue;
-                } else if cave[y+1][x+1] == '.' {
-                    x += 1;
-                    y += 1;
-                    continue;
-                } else {
-                    cave[y][x] = 'O';
-                    continue 'outer;
+            match cave[y+1][x] {
+                '.' => y += 1,
+                _ => {
+                    if cave[y+1][x-1] == '.' {
+                        x -= 1;
+                        y += 1;
+                    } else if cave[y+1][x+1] == '.' {
+                        x += 1;
+                        y += 1;
+                    } else {
+                        cave[y][x] = 'O';
+                        continue 'outer;
+                    }
                 }
             }
         }
