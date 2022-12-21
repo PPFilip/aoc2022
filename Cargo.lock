@@ -22,6 +22,7 @@ dependencies = [
  "regex",
  "serde",
  "serde_json",
+ "xxcalc",
 ]
 
 [[package]]
@@ -287,6 +288,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "smallvec"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4c8cbcd6df1e117c2210e13ab5109635ad68a929fcbb8964dc965b76cb5ee013"
+
+[[package]]
 name = "syn"
 version = "1.0.105"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -350,6 +357,15 @@ name = "winapi-x86_64-pc-windows-gnu"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
+
+[[package]]
+name = "xxcalc"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4c2725420f62b8c706cd7f710b45bc30a702de16b092114b84bd0bb6d9cccdbc"
+dependencies = [
+ "smallvec",
+]
 
 [[package]]
 name = "yansi"
