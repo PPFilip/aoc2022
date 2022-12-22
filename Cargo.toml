@@ -100,6 +100,10 @@ path = "src/day20.rs"
 name = "day21"
 path = "src/day21.rs"
 
+[[bin]]
+name = "day22"
+path = "src/day22.rs"
+
 [dependencies]
 pretty_assertions = "1.3.0"
 itertools = "0.10.5"
