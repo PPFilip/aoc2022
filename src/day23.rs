@@ -44,33 +44,30 @@ fn has_neighbour(point: Point, checks: &[Point], elven_positions: &HashSet<Point
     points.iter().any(|p| elven_positions.contains(p))
 }
 
+const DIR_MOVE:[Point;4] = [(0, -1), (0, 1), (-1, 0), (1, 0)];
+const DIR_CHECK:[[Point;3];4] = [[(-1, -1), (0, -1), (1, -1)], [(-1, 1), (0, 1), (1, 1)], [(-1, -1), (-1, 0), (-1, 1)], [(1, -1), (1, 0), (1, 1)]];
+const NEIGHBORS:[Point;8] = [(-1, -1), (0, -1), (1, -1), (-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0)];
 
 fn play_turn(elves: &mut [Elf], dir_index: usize) {
-    let directions = [(0, -1), (0, 1), (-1, 0), (1, 0)];
-    let dir_checks = [vec![(-1, -1), (0, -1), (1, -1)], vec![(-1, 1), (0, 1), (1, 1)], vec![(-1, -1), (-1, 0), (-1, 1)], vec![(1, -1), (1, 0), (1, 1)]];
-
-    let can_move_checks = vec![(-1, -1), (0, -1), (1, -1), (-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0)];
-
-
     let mut props: HashMap<Point, isize> = HashMap::new();
     let elven_positions: HashSet<Point> = elves.iter().map(|e| e.pos_act).collect();
 
     for elf in elves.iter_mut() {
         elf.pos_next = elf.pos_act;
 
-        if !has_neighbour(elf.pos_act, &can_move_checks, &elven_positions) {
+        if !has_neighbour(elf.pos_act, &NEIGHBORS, &elven_positions) {
             continue
         }
 
         for d in 0..4 {
             let move_idx = (dir_index + d) % 4;
-            let checks = &dir_checks[move_idx];
+            let checks = &DIR_CHECK[move_idx];
 
             if has_neighbour(elf.pos_next, checks, &elven_positions) {
                 continue
             }
 
-            elf.pos_next = add_point(elf.pos_act, directions[move_idx]);
+            elf.pos_next = add_point(elf.pos_act, DIR_MOVE[move_idx]);
 
             if let Some(prop) = props.get_mut(&elf.pos_next) {
                 *prop += 1;
@@ -139,7 +136,7 @@ pub fn part1(input_file: &str) -> isize {
 
 }
 
-pub fn part2(input_file: &str) -> isize {
+pub fn part2(input_file: &str) -> usize {
     let mut elves_act = parse_input2(input_file);
 
     'outer: for turn in 0.. {
@@ -153,7 +150,7 @@ pub fn part2(input_file: &str) -> isize {
             }
         }
 
-        return turn as isize + 1
+        return turn + 1
     }
 
     unreachable!()
