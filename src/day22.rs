@@ -143,9 +143,11 @@ pub fn part1(input_file: &str) -> usize {
     1000 * (y+1) + 4* (x+1) + (dir_index%4)
 }
 
-
-pub fn part2(input_file: &str) -> isize {
-    let (maze, instrucrions) = parse_input(input_file);
+// I have no publishable version of p2 at the moment as I've solved this day in python due to time constraints.
+// https://github.com/Gobbel2000/advent-of-code/blob/master/src/bin/day22-2.rs is the best Rust ver I've
+// seen on Reddit, and I honestly won't do any better than this. Even my p1 take on this day is all over the place.
+pub fn part2(_input_file: &str) -> isize {
+    // let (maze, instrucrions) = parse_input(input_file);
 
     0
 }
@@ -183,7 +185,7 @@ mod tests {
     #[ignore]
     #[test]
     fn test_part2() {
-        assert_eq!(part2("input/day22.txt"), 0)
+        assert_eq!(part2("input/day22.txt"), 108311)
     }
 
 }
